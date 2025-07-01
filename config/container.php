@@ -1,5 +1,7 @@
 <?php
 
+use Mezzio\Session\Ext\PhpSessionPersistence;
+use Mezzio\Session\SessionPersistenceInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Level;
 use Monolog\Logger;
@@ -23,5 +25,10 @@ return file_exists(__DIR__.'/container.local.php')
             $settings = $c->get('settings')['twig'] ?? [];
 
             return Twig::create($settings['path'], $settings['options']);
+        },
+        SessionPersistenceInterface::class => function (ContainerInterface $c) {
+            $settings = $c->get('settings')['session'] ?? [];
+
+            return new PhpSessionPersistence($settings['nonLocking'] ?? false, $settings['deleteCookieOnEmptySession'] ?? false);
         },
     ];

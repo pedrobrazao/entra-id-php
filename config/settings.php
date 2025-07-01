@@ -21,4 +21,8 @@ return [
             'cache' => $_ENV['TWIG_CACHE'] ?? false,
         ],
     ],
+    'session' => [
+        'nonLocking' => $_ENV['SESSION_NON_LOCKING'] ?? false,
+        'deleteCookieOnEmptySession' => $_ENV['SESSION_DELETE_COOKIE_ON_EMPTY_SESSION'] ?? false,
+    ],
 ];
