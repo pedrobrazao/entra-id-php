@@ -15,4 +15,10 @@ return [
         'path' => $_ENV['LOGGER_PATH'] ?? 'php://stderr',
         'level' => $_ENV['LOGGER_LEVEL'] ?? Logger::DEBUG,
     ],
+    'twig' => [
+        'path' => $_ENV['TWIG_TEMPLATES_PATH'] ?? __DIR__.'/../templates',
+        'options' => [
+            'cache' => $_ENV['TWIG_CACHE'] ?? false,
+        ],
+    ],
 ];

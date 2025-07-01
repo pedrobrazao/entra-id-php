@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            <link rel="stylesheet" href="style.css"/>
+            <title>{% block title %}{% endblock %} - Azure Entra ID Demo</title>
+        {% endblock %}
+    </head>
+    <body>
+    <h1>Azure Entra ID Demo</h1>
+        <nav>
+<a href="{{ url_for('home') }}">Home</a><br>
+</nav>
+<div id="content">{% block content %}{% endblock %}</div>
+        <div id="footer">
+            {% block footer %}
+                &copy; Copyright 2025 by <a href="https://github.com/pedrobrazao/entra-id-php">Pedro Ferreira</a>.
+            {% endblock %}
+        </div>
+    </body>
+</html>

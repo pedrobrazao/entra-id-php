@@ -19,6 +19,6 @@ final readonly class ContainerFactory
         $builder = new ContainerBuilder();
         $builder->addDefinitions($this->definitions);
 
-        return new ContainerDecorator($builder->build());
+        return $builder->build();
     }
 }
