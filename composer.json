@@ -2,13 +2,14 @@
     "require": {
         "php": ">=8.2",
         "slim/slim": "^4.14",
+        "slim/psr7": "^1.7",
         "php-di/php-di": "^7.0",
         "monolog/monolog": "^3.8",
-        "guzzlehttp/psr7": "^2.7",
         "vlucas/phpdotenv": "^5.6",
         "slim/twig-view": "^3.4",
         "mezzio/mezzio-session": "^1.16",
-        "mezzio/mezzio-session-ext": "^1.20"
+        "mezzio/mezzio-session-ext": "^1.20",
+        "microsoft/microsoft-graph": "^2.39"
     },
     "autoload": {
         "psr-4": {
@@ -26,5 +27,11 @@
         "symfony/var-dumper": "^7.2",
         "friendsofphp/php-cs-fixer": "^3.75",
         "rector/rector": "^2.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "tbachert/spi": true
+        }
     }
 }

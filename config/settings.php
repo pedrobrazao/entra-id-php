@@ -25,4 +25,9 @@ return [
         'nonLocking' => $_ENV['SESSION_NON_LOCKING'] ?? false,
         'deleteCookieOnEmptySession' => $_ENV['SESSION_DELETE_COOKIE_ON_EMPTY_SESSION'] ?? false,
     ],
+    'azure' => [
+        'tenantId' => $_ENV['AZURE_TENANT_ID'] ?? '',
+        'clientId' => $_ENV['AZURE_CLIENT_ID'] ?? '',
+        'clientSecret' => $_ENV['AZURE_CLIENT_SECRET'] ?? '',
+    ],
 ];

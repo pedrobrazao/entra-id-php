@@ -2,6 +2,8 @@
 
 use Mezzio\Session\Ext\PhpSessionPersistence;
 use Mezzio\Session\SessionPersistenceInterface;
+use Microsoft\Graph\GraphServiceClient;
+use Microsoft\Kiota\Authentication\Oauth\ClientCredentialContext;
 use Monolog\Handler\StreamHandler;
 use Monolog\Level;
 use Monolog\Logger;
@@ -30,5 +32,13 @@ return file_exists(__DIR__.'/container.local.php')
             $settings = $c->get('settings')['session'] ?? [];
 
             return new PhpSessionPersistence($settings['nonLocking'] ?? false, $settings['deleteCookieOnEmptySession'] ?? false);
+        },
+        ClientCredentialContext::class => function (ContainerInterface $c) {
+            $settings = $c->get('settings')['azure'];
+
+            return new ClientCredentialContext($settings['tenantId'], $settings['clientId'], $settings['clientSecret']);
+        },
+        GraphServiceClient::class => function (ContainerInterface $c) {
+            return new GraphServiceClient($c->get(ClientCredentialContext::class));
         },
     ];
