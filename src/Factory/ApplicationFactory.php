@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Factory;
 
+use App\Handler\Admin\UserListHandler;
 use App\Handler\HomeHandler;
 use App\Middleware\IdentityMiddleware;
 use Mezzio\Session\SessionMiddleware;
@@ -11,6 +12,7 @@ use Mezzio\Session\SessionPersistenceInterface;
 use Psr\Container\ContainerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
+use Slim\Routing\RouteCollectorProxy;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
@@ -33,7 +35,11 @@ final readonly class ApplicationFactory
         $settings = $this->container->get('settings') ?? [];
         $errorMiddleware = $app->addErrorMiddleware($settings['displayErrorDetails'] ?? false, $settings['logErrors'] ?? true, $settings['logErrorDetails'] ?? true);
 
-        $app->get('/', HomeHandler::class)->setName('home');
+        $app->get('/', HomeHandler::class)->setName(HomeHandler::NAME);
+
+        $app->group('/admin', function (RouteCollectorProxy $group) {
+            $group->get('/users', UserListHandler::class)->setName(UserListHandler::NAME);
+        });
 
         return $app;
     }

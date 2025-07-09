@@ -11,6 +11,9 @@
         <nav>
 <a href="{{ url_for('home') }}">Home</a><br>
 </nav>
+{% if error %}
+<div><p class="error">{{ error }}</p></div>
+{% endif %}
 <div id="content">{% block content %}{% endblock %}</div>
         <div id="footer">
             {% block footer %}
