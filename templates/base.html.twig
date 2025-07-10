@@ -9,7 +9,7 @@
     <body>
     <h1>Azure Entra ID Demo</h1>
         <nav>
-<a href="{{ url_for('home') }}">Home</a><br>
+<a href="{{ url_for(constant('App\\Handler\\HomeHandler::NAME')) }}">Home</a><br>
 </nav>
 {% if error %}
 <div><p class="error">{{ error }}</p></div>

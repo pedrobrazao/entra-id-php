@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Factory;
 
+use App\Handler\Admin\UserGetHandler;
 use App\Handler\Admin\UserListHandler;
 use App\Handler\HomeHandler;
 use App\Middleware\IdentityMiddleware;
@@ -39,6 +40,7 @@ final readonly class ApplicationFactory
 
         $app->group('/admin', function (RouteCollectorProxy $group) {
             $group->get('/users', UserListHandler::class)->setName(UserListHandler::NAME);
+            $group->get('/users/{id}', UserGetHandler::class)->setName(UserGetHandler::NAME);
         });
 
         return $app;
