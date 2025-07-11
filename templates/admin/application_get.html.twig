@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ application.displayName }}{% endblock %}
+
+{% block content %}
+<h2>{{ application.displayName }}</h2>
+<dl>
+<dt>ID:</dt>
+<dd>{{ application.id }}</dd>
+<dt>Created At:</dt>
+<dd>{{ application.createdDateTime|date('c') }}</dd>
+</dl>
+{% endblock %}

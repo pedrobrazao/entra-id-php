@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block title %}List Applications{% endblock %}
+
+{% block content %}
+<h2>Applications ({{ applications|length }})</h2>
+{% if applications|length > 0 %}
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Created At</th>
+</tr>
+</thead>
+<tbody>
+{% for application in applications %}
+<tr>
+<td>
+<a href="{{ url_for(constant('App\\Handler\\Admin\\ApplicationGetHandler::NAME'), {id: application.id}) }}">
+{{ application.displayName }}
+</a>
+</td>
+<td>{{ application.createdDateTime|date('c') }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+{% endblock %}

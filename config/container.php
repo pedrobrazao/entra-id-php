@@ -38,7 +38,5 @@ return file_exists(__DIR__.'/container.local.php')
 
             return new ClientCredentialContext($settings['tenantId'], $settings['clientId'], $settings['clientSecret']);
         },
-        GraphServiceClient::class => function (ContainerInterface $c) {
-            return new GraphServiceClient($c->get(ClientCredentialContext::class));
-        },
+        GraphServiceClient::class => fn(ContainerInterface $c) => new GraphServiceClient($c->get(ClientCredentialContext::class)),
     ];

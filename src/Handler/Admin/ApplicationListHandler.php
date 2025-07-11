@@ -4,28 +4,28 @@ declare(strict_types=1);
 
 namespace App\Handler\Admin;
 
-use App\Service\UserService;
+use App\Service\ApplicationService;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Response;
 use Slim\Views\Twig;
 
-final readonly class UserListHandler implements RequestHandlerInterface
+final readonly class ApplicationListHandler implements RequestHandlerInterface
 {
-    public const NAME = 'admin/user_list';
-    private const TEMPLATE = 'admin/user_list.html.twig';
+    public const NAME = 'admin/application_list';
+    private const TEMPLATE = 'admin/application_list.html.twig';
 
     public function __construct(
-        private UserService $userService,
+        private ApplicationService $applicationService,
     ) {}
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $users = $this->userService->listUsers();
+        $applications = $this->applicationService->listApplications();
 
         return Twig::fromRequest($request)->render(new Response(), self::TEMPLATE, [
-            'users' => $users,
+            'applications' => $applications,
         ]);
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Factory;
 
+use App\Handler\Admin\ApplicationGetHandler;
+use App\Handler\Admin\ApplicationListHandler;
 use App\Handler\Admin\UserGetHandler;
 use App\Handler\Admin\UserListHandler;
 use App\Handler\HomeHandler;
@@ -38,9 +40,11 @@ final readonly class ApplicationFactory
 
         $app->get('/', HomeHandler::class)->setName(HomeHandler::NAME);
 
-        $app->group('/admin', function (RouteCollectorProxy $group) {
+        $app->group('/admin', function (RouteCollectorProxy $group): void {
             $group->get('/users', UserListHandler::class)->setName(UserListHandler::NAME);
             $group->get('/users/{id}', UserGetHandler::class)->setName(UserGetHandler::NAME);
+            $group->get('/applications', ApplicationListHandler::class)->setName(ApplicationListHandler::NAME);
+            $group->get('/applications/{id}', ApplicationGetHandler::class)->setName(ApplicationGetHandler::NAME);
         });
 
         return $app;

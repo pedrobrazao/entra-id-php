@@ -7,10 +7,10 @@ namespace App\Service;
 use Microsoft\Graph\Generated\Models\User;
 use Microsoft\Graph\GraphServiceClient;
 
-final class UserService
+final readonly class UserService
 {
     public function __construct(
-        private readonly GraphServiceClient $client
+        private GraphServiceClient $client
     ) {}
 
     /**
