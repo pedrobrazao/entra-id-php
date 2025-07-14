@@ -9,7 +9,8 @@
         "slim/twig-view": "^3.4",
         "mezzio/mezzio-session": "^1.16",
         "mezzio/mezzio-session-ext": "^1.20",
-        "microsoft/microsoft-graph": "^2.39"
+        "microsoft/microsoft-graph": "^2.39",
+        "thenetworg/oauth2-azure": "^2.2"
     },
     "autoload": {
         "psr-4": {

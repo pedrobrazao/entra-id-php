@@ -29,8 +29,18 @@ final readonly class ApplicationGetHandler implements RequestHandlerInterface
             throw new \InvalidArgumentException('Application not found.');
         }
 
+        $properties = [];
+
+        foreach (array_keys($application->getFieldDeserializers()) as $field) {
+            $method = 'get'.ucfirst($field);
+            if (method_exists($application, $method) && null !== ($value = $application->{$method}()) && is_object($value) && method_exists($value, 'getFieldDeserializers')) {
+                $properties[$field] = $value;
+            }
+        }
+
         return Twig::fromRequest($request)->render(new Response(), self::TEMPLATE, [
             'application' => $application,
+            'properties' => $properties,
         ]);
     }
 }

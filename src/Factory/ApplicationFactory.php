@@ -9,6 +9,9 @@ use App\Handler\Admin\ApplicationListHandler;
 use App\Handler\Admin\UserGetHandler;
 use App\Handler\Admin\UserListHandler;
 use App\Handler\HomeHandler;
+use App\Handler\LoginHandler;
+use App\Handler\LogoutHandler;
+use App\Handler\MeHandler;
 use App\Middleware\IdentityMiddleware;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Session\SessionPersistenceInterface;
@@ -30,7 +33,7 @@ final readonly class ApplicationFactory
 
         $app = AppFactory::create();
 
-        $app->add(new IdentityMiddleware());
+        $app->add($this->container->get(IdentityMiddleware::class));
         $app->add(TwigMiddleware::create($app, $app->getContainer()->get(Twig::class)));
         $app->add(new SessionMiddleware($app->getContainer()->get(SessionPersistenceInterface::class)));
         $app->addRoutingMiddleware();
@@ -39,6 +42,9 @@ final readonly class ApplicationFactory
         $errorMiddleware = $app->addErrorMiddleware($settings['displayErrorDetails'] ?? false, $settings['logErrors'] ?? true, $settings['logErrorDetails'] ?? true);
 
         $app->get('/', HomeHandler::class)->setName(HomeHandler::NAME);
+        $app->get('/login', LoginHandler::class)->setName(LoginHandler::NAME);
+        $app->get('/logout', LogoutHandler::class)->setName(LogoutHandler::NAME);
+        $app->get('/me', MeHandler::class)->setName(MeHandler::NAME);
 
         $app->group('/admin', function (RouteCollectorProxy $group): void {
             $group->get('/users', UserListHandler::class)->setName(UserListHandler::NAME);

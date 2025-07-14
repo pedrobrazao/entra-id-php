@@ -10,6 +10,7 @@ use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Slim\Views\Twig;
+use TheNetworg\OAuth2\Client\Provider\Azure;
 
 return file_exists(__DIR__.'/container.local.php')
     ? include __DIR__.'/container.local.php'
@@ -38,5 +39,29 @@ return file_exists(__DIR__.'/container.local.php')
 
             return new ClientCredentialContext($settings['tenantId'], $settings['clientId'], $settings['clientSecret']);
         },
-        GraphServiceClient::class => fn(ContainerInterface $c) => new GraphServiceClient($c->get(ClientCredentialContext::class)),
+        GraphServiceClient::class => fn (ContainerInterface $c) => new GraphServiceClient($c->get(ClientCredentialContext::class)),
+        Azure::class => function (ContainerInterface $c) {
+            $settings = $c->get('settings')['azure'];
+
+            $provider = new Azure([
+                'clientId' => $settings['clientId'],
+                'clientSecret' => $settings['clientSecret'],
+                'redirectUri' => $settings['redirectUri'],
+                'scopes'            => ['openid'],
+                'defaultEndPointVersion' => '2.0',
+            ]);
+
+            $provider->tenant = $settings['tenantId'];
+            $provider->defaultEndPointVersion = Azure::ENDPOINT_VERSION_2_0;
+            $baseGraphUri = $provider->getRootMicrosoftGraphUri(null);
+            $provider->scope = [
+                'openid',
+                'profile',
+                'email',
+                'offline_access',
+                $baseGraphUri.'/User.Read',
+            ];
+
+            return $provider;
+        },
     ];

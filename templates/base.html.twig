@@ -9,7 +9,14 @@
     <body>
     <h1>Azure Entra ID Demo</h1>
         <nav>
-<a href="{{ url_for(constant('App\\Handler\\HomeHandler::NAME')) }}">Home</a><br>
+<a href="{{ url_for(constant('App\\Handler\\HomeHandler::NAME')) }}">Home</a> |
+{% if identity %}
+<a href="{{ url_for(constant('App\\Handler\\MeHandler::NAME')) }}">{{ identity.name }}</a> |
+<a href="{{ url_for(constant('App\\Handler\\LogoutHandler::NAME')) }}">Logout</a> |
+{% else %}
+<a href="{{ authorize_uri}}">Login</a> |
+<a href="">Signup</a>
+{% endif %}
 </nav>
 {% if error %}
 <div><p class="error">{{ error }}</p></div>

@@ -29,5 +29,6 @@ return [
         'tenantId' => $_ENV['AZURE_TENANT_ID'] ?? '',
         'clientId' => $_ENV['AZURE_CLIENT_ID'] ?? '',
         'clientSecret' => $_ENV['AZURE_CLIENT_SECRET'] ?? '',
+        'redirectUri' => $_ENV['AZURE_REDIRECT_URI'] ?? '',
     ],
 ];

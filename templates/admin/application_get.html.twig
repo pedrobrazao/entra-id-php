@@ -9,5 +9,13 @@
 <dd>{{ application.id }}</dd>
 <dt>Created At:</dt>
 <dd>{{ application.createdDateTime|date('c') }}</dd>
+{% if application.appId %}
+<dt>App ID:</dt>
+<dd>{{ application.appId }}</dd>
+{% endif %}
+{% if application.publisherDomain %}
+<dt>Publisher Domain:</dt>
+<dd>{{ application.publisherDomain }}</dd>
+{% endif %}
 </dl>
 {% endblock %}
