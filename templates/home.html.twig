@@ -3,5 +3,14 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Home</h1>
+<h2>Home</h2>
+<p>This package is aimed to illustrate how to integrate Azure Entra ID authentication in a standard PHP application using PSR architecture.</p>
+<p>Azure Entra ID exposes a standard OAuth2 authentication server while it also offers a REST API called MS Graph which allows the management of all Microsoft resources associated with registrated users.</p>
+<p>After cloning the code take these steps:</p>
+<ol>
+<li><code>composer install</code></li>
+<li><code>cp .env.example .env</code></li>
+<li>Edit <code>.env</code> and enter your values accordingly.</li>
+<li><code>php -S localhost:8000 -t public/</code></li>
+</ol>
 {% endblock %}
