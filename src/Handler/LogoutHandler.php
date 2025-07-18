@@ -25,8 +25,8 @@ final class LogoutHandler implements RequestHandlerInterface
         $_SESSION = RetrieveSession::fromRequest($request);
         $_SESSION->clear();
 
-         $redirectUri = (string) $request->getUri()->withPath('/');
-         $url = $this->provider->getLogoutUrl($redirectUri);
+        $redirectUri = (string) $request->getUri()->withPath('/');
+        $url = $this->provider->getLogoutUrl($redirectUri);
 
         return $this->redirectToUrl($url);
     }

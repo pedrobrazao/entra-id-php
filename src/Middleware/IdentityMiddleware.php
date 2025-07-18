@@ -16,7 +16,7 @@ use Slim\Views\Twig;
 use TheNetworg\OAuth2\Client\Provider\Azure;
 use TheNetworg\OAuth2\Client\Token\AccessToken;
 
-final class IdentityMiddleware implements MiddlewareInterface
+final readonly class IdentityMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private Azure $provider,
