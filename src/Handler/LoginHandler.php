@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
+use App\Service\IdentityService;
 use Mezzio\Session\RetrieveSession;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use TheNetworg\OAuth2\Client\Provider\Azure;
-use TheNetworg\OAuth2\Client\Token\AccessToken;
 
 final class LoginHandler implements RequestHandlerInterface
 {
@@ -29,15 +29,11 @@ final class LoginHandler implements RequestHandlerInterface
             return $this->redirectToRoute($request, HomeHandler::NAME);
         }
 
-        /** @var AccessToken $token */
-        $token = $this->provider->getAccessToken('authorization_code', [
-            'scope' => $this->provider->scope,
-            'code' => $query['code'],
-        ]);
+        $identityService = new IdentityService($this->provider, RetrieveSession::fromRequest($request));
 
-        $_SESSION = RetrieveSession::fromRequest($request);
-        $_SESSION->clear();
-        $_SESSION->set('token', serialize($token));
+        if (null === $identityService->getAccessToken($query['code'])) {
+            return $this->redirectToRoute($request, HomeHandler::NAME);
+        }
 
         return $this->redirectToRoute($request, MeHandler::NAME);
     }
